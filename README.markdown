@@ -29,14 +29,24 @@ Raspberry Pi boots from an SD card. Here, we write the disk image of Raspbian to
 
 2. Insert SD card to PC.
 
-3. Unmount the SD card if it is automatically mounted.  For Mac, check the device name by ``diskutil list`` command, and unmount the disk with ``sudo diskutil unmountDisk <device name>``. Device name is like ``/dev/disk3``.
+3. Unmount the SD card if it is automatically mounted. For Mac,
 
-4. Write the image to the SD card.
+  1. Check the device name of the SD card.  Device name is something like `/dev/disk3`
 ```
-sudo dd if=<image file name> of=<raw device name> bs=1m
+diskutil list
 ```
-where ``<image file name>`` is the file name of the one that is downloaded in step 1, and ``<raw device name>`` is the device name with ``rdisk``.  For example, raw device name of ``/dev/disk3`` is ``/dev/rdisk3``.
 
+  2. Unmount the disk.  If the device name is `/dev/disk3`,
+```
+sudo diskutil unmountDisk /dev/disk3
+```
+
+4. Write the image to the SD card.  If the device name is `/dev/disk3`
+```
+sudo dd if=<image file name> of=/dev/disk3 bs=1m
+```
+where ``<image file name>`` is the file name of the one that is downloaded in step 1.
+For mac, dd command writes faster by using `/dev/rdisk3` instead of `/dev/disk3`.
 
 # Getting started
 
@@ -101,3 +111,13 @@ DHT11 module is a sensor module on which necessary registers are implemented.  A
 * Construct a circuit on the breadboard (connection graph:http://osoyoo.com/wp-content/uploads/2017/07/Untitled-Sketch_bb.png)
 * Plug the power cable of your Raspberry Pi and log in.
 * Execute the python program found at the folloing URL: http://osoyoo.com/driver/pi3_start_learning_kit_lesson_17/dht11.py
+
+# Practice
+
+Let us develop a heat index indicator.
+Heat index is explained in [wikipedia](https://ja.wikipedia.org/wiki/不快指数)
+
+The indicator senses temperature and humidity each second, and light the LED corresponding to the current heat index.
+  * green: heat index < 75
+  * yellow: heat index < 80
+  * red: heat index >= 80
