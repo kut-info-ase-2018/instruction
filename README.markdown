@@ -65,7 +65,11 @@ For mac, dd command writes faster by using `/dev/rdisk3` instead of `/dev/disk3`
   * Find the IP address assigned to your Raspberry Pi by `ifconfig`.
   * Log in though SSH from your laptop: `ssh pi@<IP address>`
 * Power off
-  * Type `sync` to ensure all data is written to the SD card.
+  * Use shutdown command
+```
+sudo shutdown -h now
+```
+  (Alternatively, type `sync` to ensure all data is written to the SD card.)
   * Unplug the power cable.
 
 # Light LED
